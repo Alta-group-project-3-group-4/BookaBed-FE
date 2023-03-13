@@ -19,7 +19,6 @@ const Card = () => {
             type="radio"
             name="rating-4"
             className="mask mask-star-2 bg-[#0E8388]"
-            checked
           />
           <p className="text-start text-xl font-semibold -mt-1">
             4,9
