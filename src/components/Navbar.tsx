@@ -1,10 +1,12 @@
 import React from "react";
 
-const Navbar = () => {
+export const Navbar = () => {
   return (
     <div className="navbar sticky z-50 bg-white shadow-md rounded-lg">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl text-[#0E8388]">Bookabed</a>
+        <a className="btn btn-ghost normal-case text-xl text-[#0E8388]">
+          Bookabed
+        </a>
       </div>
       <div className="flex-1 justify-between gap-2">
         <div className="form-control">
@@ -15,7 +17,10 @@ const Navbar = () => {
           />
         </div>
         <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+          <label
+            tabIndex={0}
+            className="btn btn-ghost btn-circle avatar"
+          >
             <div className="w-10 rounded-full">
               <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
             </div>
@@ -43,4 +48,6 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export const Navbar2 = () => {
+  return <div>lalalal</div>;
+};
