@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 
 import Login from '../pages/Auth/Login'
 import Register from '../pages/Auth/Register'
-import HomePage from '../pages/HomePage/Home'
+import Home from "../pages/HomePage/Home";
 import Details from '../pages/Details/Details'
 import Profile from '../pages/Profile/Profile'
 import UpProfile from '../pages/Profile/UpProfile'
@@ -15,9 +15,9 @@ const App = () => {
   return (
     <BrowserRouter>
     <Routes>
+      <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/homepage" element={<HomePage />} />
       <Route path="/rooms/:id_rooms" element={<Details />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/profile/:id_profile" element={<UpProfile />} />
