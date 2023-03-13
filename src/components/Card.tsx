@@ -9,10 +9,10 @@ const Card = () => {
         <img 
         src={image} 
         alt="Nama Tempat" 
-        className="w-full aspect-auto object-contain"
+        className="w-64 aspect-auto object-contain"
         />
       </figure>
-      <div className="card-body items-start justify-between">
+      <div className="card-body items-start justify-between m-7 -mt-1">
         <h2 className="card-title">Nama Tempat</h2>
         <div className="rating space-x-2">
           <input
