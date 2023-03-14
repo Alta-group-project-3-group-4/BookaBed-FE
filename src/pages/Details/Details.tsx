@@ -11,7 +11,7 @@ const Details = () => {
   return (
     <Layout>
       <Navbar2 />
-      <div className="container mx-auto p-10">
+      <div className="container mx-auto p-10 w-full">
         <div className="flex-1 p-6">
           <p className="font-semibold text-3xl text-black">
             Nama Tempat
@@ -36,7 +36,7 @@ const Details = () => {
               </p>
             </div>
           </div>
-          <div className="flex justify-end mt-20">
+          <div className="flex justify-end mt-20 ">
             <div className="flex flex-col">
               <p className="flex justify-center font-semibold text-2xl md:text-lg text-black">
                 Details Reservasi
@@ -85,16 +85,32 @@ const Details = () => {
             </div>
           </div>
           <div className="flex flex-col items-center justify-center w-full h-full p-7 -mt-96">
-            <div className="flex flex-col w-full">
-              <img src={images} alt="" className="w-5/12" />
+            <div className="flex flex-row w-full gap-3 items-center">
+              <img
+                src={images}
+                alt="foto1"
+                className="w-[30%] h-full object-"
+              />
+              <div className="flex flex-col gap-3">
+                <img
+                  src={images}
+                  alt="foto2"
+                  className="w-[75%] object-contain"
+                />
+                <img
+                  src={images}
+                  alt="foto3"
+                  className="w-[75%] object-contain"
+                />
+              </div>
             </div>
           </div>
-          <div className="flex flex-row p-7 space-x-10 md:mt-36 lg:-mt-4">
-            <div className="flex flex-col -mt-4 lg:w-full">
-              <p className="font-semibold text-2xl text-black">
-                About
-              </p>
-              <p className="text-black mt-5">
+          <br />
+          <div className="flex justify-between">
+            <div className="w-[60%] flex flex-col">
+              <h1 className="font-bold text-2xl pb-3">About</h1>
+              <p>
+                {" "}
                 Vila - vila indah di PANTAI KOKO terdiri dari
                 sekelompok empat bangunan langsung di pantai
                 hitam yang berkilauan di Lovina, Bali Utara.
@@ -106,28 +122,25 @@ const Details = () => {
                 setiap kebutuhan.
               </p>
             </div>
-            <div className="flex -mt-4">
-              <div className="flex flex-col w-3/4 md:w-3/6">
-                <p className="font-semibold text-2xl text-black">
-                  Review
-                </p>
-                <div className="flex items-center space-x-3 mt-5">
-                  <div className="mask mask-squircle w-12 h-12">
-                    <img src={images} />
-                  </div>
-                  <p className="text-black font-semibold">
-                    victoriaa
-                  </p>
-                </div>
-                <p className="text-black mt-2">
-                  Tempat yang bagus, tuan rumah yang sangat
-                  membantu, kami makan malam dan pijat dan tur
-                  lumba - lumba ( belum menemukan lumba - lumba,
-                  sepertinya Februari bukan musim untuk
-                  menontonnya) dan dia membantu mengatur
-                  segalanya.
+            <div className="w-[30%]">
+              <h1 className="font-bold text-2xl pb-3">Review</h1>
+              <div className="flex">
+                <img
+                  src={images}
+                  alt="profil"
+                  className="rounded-full w-14"
+                />
+                <p className="font-bold text-base self-center pl-3">
+                  nama profile
                 </p>
               </div>
+              <p className="text-sm pt-4 ">
+                Tempat yang bagus, tuan rumah yang sangat
+                membantu, kami makan malam dan pijat dan tur
+                lumba - lumba ( belum menemukan lumba - lumba,
+                sepertinya Februari bukan musim untuk
+                menontonnya) dan dia membantu mengatur segalanya.
+              </p>
             </div>
           </div>
         </div>
