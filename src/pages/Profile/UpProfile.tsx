@@ -1,17 +1,19 @@
 import React from "react";
 
 import Layout from "../../components/Layout";
-import Navbar from "../../components/Navbar";
+import Navbar2 from "../../components/Navbar2";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
 const UpProfile = () => {
   return (
     <Layout>
-      <Navbar />
+      <Navbar2 />
       <div className="container mx-auto p-11">
         <div className="flex-1 p-6">
-          <p className="text-5xl text-black font-semibold">Update Profile</p>
+          <p className="text-5xl text-black font-semibold">
+            Update Profile
+          </p>
         </div>
         <div className="flex justify-end">
           <div className="mt-5 h-full w-4/12 md:w-4/12 sm:w-4/12 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
@@ -45,14 +47,20 @@ const UpProfile = () => {
                 </label>
                 <p className="pl-1">or drag and drop</p>
               </div>
-              <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+              <p className="text-xs text-gray-500">
+                PNG, JPG, GIF up to 10MB
+              </p>
             </div>
           </div>
         </div>
         <div className="flex flex-col -mt-40">
           <div className="flex items-center m-5 p-6 gap-4 text-[16px] font-medium text-black space-x-8">
             <p className="text-2xl">Name:</p>
-            <Input id="name" type="text" placeholder="example: Jhon Doe" />
+            <Input
+              id="name"
+              type="text"
+              placeholder="example: Jhon Doe"
+            />
           </div>
           <div className="flex items-center m-5 p-6 gap-4 text-[16px] font-medium text-black space-x-10 -mt-5">
             <p className="text-2xl">Email:</p>
@@ -78,10 +86,10 @@ const UpProfile = () => {
             ></textarea>
           </div>
           <div className="flex justify-center -mt-4">
-            <Button 
-            id="btn" 
-            label="Update Profile"
-            className="rounded-xl lg:w-2/12 md:w-6/12 sm:w-6/12 bg-[#0E8388] px-6 py-2 text-[16px] font-medium capitalize tracking-wider text-white" 
+            <Button
+              id="btn"
+              label="Update Profile"
+              className="rounded-xl lg:w-2/12 md:w-6/12 sm:w-6/12 bg-[#0E8388] px-6 py-2 text-[16px] font-medium capitalize tracking-wider text-white"
             />
           </div>
         </div>

@@ -2,15 +2,15 @@ import React from "react";
 
 import Layout from "../../components/Layout";
 import Button from "../../components/Button";
-import Navbar from "../../components/Navbar";
+import Navbar2 from "../../components/Navbar2";
 import Footer from "../../components/Footer";
 
-import images from "../../assets/Hotel-Booking.svg"
+import images from "../../assets/Hotel-Booking.svg";
 
 const Ulasan = () => {
   return (
     <Layout>
-      <Navbar />
+      <Navbar2 />
       <div className="container mx-auto p-10">
         <div className="flex flex-row p-6">
           <div className="flex w-full md:w-7/12 lg:w-10/12">
@@ -63,7 +63,7 @@ const Ulasan = () => {
             </div>
           </div>
           <div className="flex mx-auto mt-12">
-            <img src={images} alt=""/>
+            <img src={images} alt="" />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React from "react";
 
 import Layout from "../../components/Layout";
-import Navbar from "../../components/Navbar";
+import Navbar2 from "../../components/Navbar2";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Footer from "../../components/Footer";
@@ -9,7 +9,7 @@ import Footer from "../../components/Footer";
 const UpdateRumah = () => {
   return (
     <Layout>
-      <Navbar />
+      <Navbar2 />
       <div className="container mx-auto p-11">
         <div className="flex-1 p-6">
           <p className="text-2xl text-black font-semibold">
