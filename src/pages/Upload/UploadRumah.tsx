@@ -6,14 +6,14 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Footer from "../../components/Footer";
 
-const UpdateRumah = () => {
+const UploadRumah = () => {
   return (
     <Layout>
       <Navbar />
       <div className="container mx-auto p-11">
         <div className="flex-1 p-6">
           <p className="text-2xl text-black font-semibold">
-            Edit Rumah
+            Upload Rumah
           </p>
         </div>
         <div className="flex justify-end">
@@ -97,7 +97,7 @@ const UpdateRumah = () => {
           </div>
           <br />
           <div className="flex justify-center">
-            <Button id="btn" label="Edit Rumah" />
+            <Button id="btn" label="Upload Rumah" />
           </div>
         </div>
       </div>
@@ -106,4 +106,4 @@ const UpdateRumah = () => {
   );
 };
 
-export default UpdateRumah;
+export default UploadRumah;
