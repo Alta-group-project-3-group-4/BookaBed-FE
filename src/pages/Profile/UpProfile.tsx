@@ -62,7 +62,7 @@ const UpProfile = () => {
               placeholder="example: jhondoe@gmail.com"
             />
           </div>
-          <div className="flex items-center m-5 p-6 gap-4  font-medium text-black space-x-4 -mt-5">
+          <div className="flex items-center m-5 p-6 gap-4  font-medium text-black space-x-2 -mt-5">
             <p className="text-2xl">Address:</p>
             <Input
               id="name"
