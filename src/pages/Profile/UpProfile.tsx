@@ -14,7 +14,7 @@ const UpProfile = () => {
           <p className="text-5xl text-black font-semibold">Update Profile</p>
         </div>
         <div className="flex justify-end">
-          <div className="mt-5 h-full w-4/12 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+          <div className="mt-5 h-full w-4/12 md:w-4/12 sm:w-4/12 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
             <div className="space-y-1 text-center">
               <svg
                 className="mx-auto h-12 w-12 text-gray-400"
@@ -49,12 +49,12 @@ const UpProfile = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col -mt-28">
+        <div className="flex flex-col -mt-40">
           <div className="flex items-center m-5 p-6 gap-4 text-[16px] font-medium text-black space-x-8">
             <p className="text-2xl">Name:</p>
             <Input id="name" type="text" placeholder="example: Jhon Doe" />
           </div>
-          <div className="flex items-center m-5 p-6 gap-4 text-[16px] font-medium text-black space-x-10">
+          <div className="flex items-center m-5 p-6 gap-4 text-[16px] font-medium text-black space-x-10 -mt-5">
             <p className="text-2xl">Email:</p>
             <Input
               id="name"
@@ -62,7 +62,7 @@ const UpProfile = () => {
               placeholder="example: jhondoe@gmail.com"
             />
           </div>
-          <div className="flex items-center m-5 p-6 gap-4  font-medium text-black space-x-4">
+          <div className="flex items-center m-5 p-6 gap-4  font-medium text-black space-x-4 -mt-5">
             <p className="text-2xl">Address:</p>
             <Input
               id="name"
@@ -70,17 +70,19 @@ const UpProfile = () => {
               placeholder="example: indonesia, Jakarta Pusat"
             />
           </div>
-          <div className="flex items-center m-5 p-6 gap-4 text-[16px] font-medium text-black space-x-8">
-            <p className="text-2xl">About:</p>
+          <div className="flex items-center m-5 p-6 gap-4 text-[16px] font-medium text-black space-x-8 -mt-3">
+            <p className="text-2xl -mt-28">About:</p>
             <textarea
-              className="textarea textarea-bordered w-6/12 h-36 max-h-full rounded-lg bg-white text-black border-2 px-4 py-2 font-normal text-xl border-black"
+              className="textarea textarea-bordered w-6/12 md:w-5/12 sm:w-4/12 h-36 max-h-full rounded-lg bg-white text-black border-2 px-4 py-2 font-normal text-xl border-black"
               placeholder="example: saya seorang pengusaha"
             ></textarea>
           </div>
           <div className="flex justify-center -mt-4">
             <Button 
             id="btn" 
-            label="Update Profile" />
+            label="Update Profile"
+            className="rounded-xl lg:w-2/12 md:w-6/12 sm:w-6/12 bg-[#0E8388] px-6 py-2 text-[16px] font-medium capitalize tracking-wider text-white" 
+            />
           </div>
         </div>
       </div>
