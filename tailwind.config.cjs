@@ -6,7 +6,20 @@ module.exports = {
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        color1: "#2C3333",
+        color2: "#2E4F4F",
+        color3: "#0E8388",
+        color4: "#CBE4DE",
+      },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+      },
+    },
   },
   plugins: [require("daisyui")],
+  daisyui: {
+    themes: false,
+  },
 };
