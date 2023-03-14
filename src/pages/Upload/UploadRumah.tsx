@@ -97,7 +97,11 @@ const UploadRumah = () => {
           </div>
           <br />
           <div className="flex justify-center">
-            <Button id="btn" label="Upload Rumah" />
+            <Button
+              id="btn"
+              label="Upload Rumah"
+              className="bg-color3 w-[15rem] h-10 rounded-lg text-white font-bold"
+            />
           </div>
         </div>
       </div>

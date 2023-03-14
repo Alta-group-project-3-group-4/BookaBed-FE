@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Navbar() {
+function Navbar() {
   return (
     <div className="navbar sticky z-50 bg-white shadow-md rounded-lg">
       <div className="flex-1">
@@ -47,7 +47,4 @@ export default function Navbar() {
     </div>
   );
 }
-
-export const Navbar2 = () => {
-  return <div>lalalal</div>;
-};
+export default Navbar;

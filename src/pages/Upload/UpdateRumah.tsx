@@ -97,7 +97,11 @@ const UpdateRumah = () => {
           </div>
           <br />
           <div className="flex justify-center">
-            <Button id="btn" label="Edit Rumah" />
+            <Button
+              id="btn"
+              label="Edit Rumah"
+              className="bg-color3 w-[15rem] h-10 rounded-lg text-white font-bold"
+            />
           </div>
         </div>
       </div>
