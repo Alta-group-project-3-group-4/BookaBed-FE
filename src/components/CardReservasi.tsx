@@ -47,7 +47,7 @@ export function CardReservasi() {
 }
 export function CardRumah() {
   return (
-    <div className="flex border-2 w-1/2 rounded-lg h-48 items-center pl-4">
+    <div className="flex border-2 w-[80%] rounded-lg h-48 items-center pl-4">
       <div className="flex gap-4">
         <img src={foto} alt="foto" className="rounded-lg w-36" />
         <div className="w-[35rem]">
