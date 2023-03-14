@@ -7,7 +7,7 @@ import { RiUser3Line } from "react-icons/ri";
 function Navbar2() {
   return (
     <div className="h-1/5 w-full shadow-md pb-6">
-      <div className="flex flex-row items-center justify-between pt-10 pl-24">
+      <div className="flex flex-row items-center justify-between pt-6 pl-24">
         <div className="flex flex-row items-center gap-8">
           <h1 className="text-3xl text-color3 font-bold ">
             BookaBed
@@ -20,13 +20,13 @@ function Navbar2() {
           />
         </div>
         <div
-          className="flex gap-16 pr-32
+          className="flex gap-16 pr-32 
         "
         >
           <div className="dropdown dropdown-hover ">
             <label
               tabIndex={0}
-              className="btn btn-ghost btn-circle pb-6"
+              className="btn btn-ghost btn-circle "
             >
               <RiMenuFill className="w-7 h-7 text-color3 " />
             </label>
@@ -45,7 +45,9 @@ function Navbar2() {
               </li>
             </ul>
           </div>
-          <RiUser3Line className="w-7 h-7 text-color3  " />
+          <div className="pt-2">
+            <RiUser3Line className="w-7 h-7 text-color3 " />
+          </div>
         </div>
       </div>
     </div>
