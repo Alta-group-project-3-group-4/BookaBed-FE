@@ -1,19 +1,42 @@
 import React from "react";
-
+import { FC } from "react";
+import { useNavigate } from "react-router";
 import image from "../assets/div.svg";
+import { useCookies } from "react-cookie";
 
-const Card = () => {
+interface CardProps {
+  homestay_id?: number
+  name?: string
+  description?: string
+  price?: number
+  gambar?: string
+  images?: string
+
+}
+const Card: FC<CardProps> = (
+  { homestay_id,
+    name,
+    description,
+    price,
+    gambar,
+    images, }
+) => {
+  const navigate = useNavigate();
+
+  function onCLickDetail() {
+    navigate(`/rooms/:id_rooms}`);
+  }
   return (
     <div className="card card-compact w-96 bg-transparent p-4">
-      <figure>
-        <img 
-        src={image} 
-        alt="Nama Tempat" 
-        className="w-64 aspect-auto object-contain"
+      <figure onClick={() => onCLickDetail()}>
+        <img
+          src={images}
+          alt="Nama Tempat"
+          className="w-64 aspect-auto object-contain"
         />
       </figure>
-      <div className="card-body items-start justify-between m-7 -mt-1">
-        <h2 className="card-title">Nama Tempat</h2>
+      <div className="card-body items-start justify-between m-7 -mt-1" onClick={() => onCLickDetail()}>
+        <h2 className="card-title">{name}</h2>
         <div className="rating space-x-2">
           <input
             type="radio"
@@ -26,7 +49,7 @@ const Card = () => {
         </div>
         <div className="card-actions justify-start">
           <p className="text-start text-xl font-semibold">
-            Rp.52.964.303/malam
+            Rp.{price}/malam
           </p>
         </div>
       </div>
