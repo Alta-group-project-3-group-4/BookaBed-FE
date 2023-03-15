@@ -51,9 +51,8 @@ const Login = () => {
         body
       )
       .then((res) => {
-        const { message, token, data } = res.data;
+        const { message, token, data, id, } = res.data;
         setCookie("token", data.token, { path: "/" });
-        setCookie("id", data.id, { path: "/" });
         dispatch(handleAuth(true));
         MySwal.fire({
           icon: "success",
