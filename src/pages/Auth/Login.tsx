@@ -18,11 +18,7 @@ const Login = () => {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [cookie, setCookie] = useCookies([
-  "token",
-  "id",
-  "email",
-  "name",]);
+  const [cookie, setCookie] = useCookies(["token"]);
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -51,8 +47,9 @@ const Login = () => {
         body
       )
       .then((res) => {
-        const { message, token, data, id, } = res.data;
+        const { message, data } = res.data;
         setCookie("token", data.token, { path: "/" });
+
         dispatch(handleAuth(true));
         MySwal.fire({
           icon: "success",
@@ -77,7 +74,9 @@ const Login = () => {
   return (
     <div className=" w-full h-screen bg-white  justify-around">
       <div className="text-color3 font-bold flex flex-row justify-center pt-12 gap-12">
-        <h1 className="text-3xl self-center">BookaBed</h1>
+        <Link to={"/"}>
+          <h1 className="text-3xl self-center">BookaBed</h1>
+        </Link>
         <img src={Logo} alt="logo" className=" w-16" />
       </div>
       <div className="flex flex-row items-center justify-center gap-10 h-[30rem]">
@@ -90,9 +89,9 @@ const Login = () => {
             <h1 className="font-bold text-2xl self-center pt-4">
               Sign In
             </h1>
-            <form 
-            onSubmit={(e) => handleSubmit(e)}
-            className="pl-8">
+            <form
+              onSubmit={(e) => handleSubmit(e)}
+              className="pl-8">
               <p>Email</p>
               <Input
                 id="input-email"

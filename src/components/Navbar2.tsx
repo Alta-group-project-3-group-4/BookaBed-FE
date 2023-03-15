@@ -27,7 +27,7 @@ function Navbar2() {
       <div className="flex flex-row items-center justify-between pt-6 pl-24">
         <div className="flex flex-row items-center gap-8">
           <h1 className="text-3xl text-color3 font-bold "
-          onClick={() => navigate("/")}>BookaBed</h1>
+            onClick={() => navigate("/")}>BookaBed</h1>
           <img
             src={Logo}
             alt="Logo"
@@ -55,10 +55,10 @@ function Navbar2() {
                 <a>{checkToken ? "Logout" : "Login"}</a>
               </li>
               <li>
-                <a>Register</a>
+                <a href="/register">Register</a>
               </li>
               <li>
-                <a>Riwayat Reservasi</a>
+                <a href="/reservasi">Riwayat Reservasi</a>
               </li>
             </ul>
           </div>

@@ -42,31 +42,31 @@ const Register = () => {
         body
       )
       .then((res) => {
-        console.log("berhasil")
-        // const { message } = res.data;
-        // MySwal.fire({
-        //   title: "Berhasil Mendaftar",
-        //   text: message,
-        //   showCancelButton: false,
-        // });
+        const { message } = res.data;
+        MySwal.fire({
+          title: "Berhasil Mendaftar",
+          text: message,
+          showCancelButton: false,
+        });
 
         navigate("/login");
       })
       .catch((err) => {
-        console.log("gagal")
-        // const { message } = err.response.data;
-        // MySwal.fire({
-        //   title: "Gagal Mendaftar",
-        //   text: message,
-        //   showCancelButton: false,
-        // });
+        const { message } = err.response.data;
+        MySwal.fire({
+          title: "Gagal Mendaftar",
+          text: message,
+          showCancelButton: false,
+        });
       })
       .finally(() => setLoading(false));
   };
   return (
     <div className=" w-full h-screen bg-white  justify-around">
       <div className="text-color3 font-bold flex flex-row justify-center pt-12 gap-12">
-        <h1 className="text-3xl self-center">BookaBed</h1>
+        <Link to={"/"}>
+          <h1 className="text-3xl self-center">BookaBed</h1>
+        </Link>
         <img src={Logo} alt="logo" className=" w-16" />
       </div>
       <div className="flex flex-row items-center justify-center gap-10 h-[30rem] pt-16">
@@ -117,9 +117,9 @@ const Register = () => {
           </div>
           <div className="font-bold flex gap-4 text-color1 pt-4">
             <p>Sudah punya akun?</p>
-            {/* <Link to="/register"> */}
-            <p className="underline cursor-pointer">Sign In</p>
-            {/* </Link> */}
+            <Link to="/login">
+              <p className="underline cursor-pointer">Sign In</p>
+            </Link>
           </div>
         </div>
       </div>
