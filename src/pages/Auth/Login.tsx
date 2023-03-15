@@ -18,10 +18,14 @@ const Login = () => {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [cookie, setCookie] = useCookies(["token", "id"]);
+  const [cookie, setCookie] = useCookies([
+  "token",
+  "id",
+  "email",
+  "name",]);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [disabled, setDisabled] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -48,7 +52,7 @@ const Login = () => {
       )
       .then((res) => {
         const { message, token, data } = res.data;
-        setCookie("token", token, { path: "/" });
+        setCookie("token", data.token, { path: "/" });
         setCookie("id", data.id, { path: "/" });
         dispatch(handleAuth(true));
         MySwal.fire({
@@ -87,7 +91,9 @@ const Login = () => {
             <h1 className="font-bold text-2xl self-center pt-4">
               Sign In
             </h1>
-            <form className="pl-8">
+            <form 
+            onSubmit={(e) => handleSubmit(e)}
+            className="pl-8">
               <p>Email</p>
               <Input
                 id="input-email"
@@ -111,7 +117,6 @@ const Login = () => {
                   label="Sign In"
                   className="bg-color3 text-white w-[20rem] h-10 rounded-lg disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer"
                   loading={loading || disabled}
-                  onClick={handleSubmit}
                 />
               </div>
             </form>

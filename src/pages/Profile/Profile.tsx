@@ -1,15 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
 
-import Layout from "../../components/Layout";
-import Navbar2 from "../../components/Navbar2";
+import Swal from "../../utils/Swal";
+import withReactContent from "sweetalert2-react-content";
+
 import DetailCard from "./DetailCard";
 import Footer from "../../components/Footer";
+import Layout from "../../components/Layout";
+import Navbar2 from "../../components/Navbar2";
 import { CardRumah } from "../../components/CardReservasi";
+
+import { ProfileType } from "../../types/Profile";
 import { RiHome3Fill } from "react-icons/ri";
 import images from "../../assets/images/fotona.png";
 
 const Profile = () => {
+  const { id_user } = useParams();
+  const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
   const [modal, setModal] = useState<string>("");
+  const [user, setUser] = useState<ProfileType | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [cookie, setCookie] = useCookies(["token", "id"]);
+  const checkToken = cookie.token;
+
+  useEffect(() => {
+    profile();
+  }, []);
+
+  function profile() {
+    axios
+      .get(`http://18.142.43.11:8080/users/5`, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
+      .then((response) => {
+        const data = response.data;
+        setUser(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   const handleDetail = async () => {
     setModal("modal-open");
@@ -30,10 +66,10 @@ const Profile = () => {
                 />
               </div>
               <div className="card-title mt-4 mx-auto">
-                <p className="text-xl">Jhon Doe</p>
+                <p className="text-xl text-black">{user?.name}</p>
               </div>
               <hr />
-              <p className="mx-auto text-lg">jhondoe@gmail.com</p>
+              <p className="mx-auto text-lg">{user?.email}</p>
               <hr />
               <div className="card card-actions flex flex-row justify-between space-x-3">
                 <p className="text-md font-semibold ">Edit Profile</p>
@@ -48,10 +84,10 @@ const Profile = () => {
               <p className="font-semibold text-3xl">Hi, Jhon Doe</p>
               <div className="mt-7 p-3">
                 <p className="font-semibold text-2xl">tentang :</p>
-                <p className="mt-3 p-2">Ini About</p>
+                <p className="mt-3 p-2">{user?.about}</p>
                 <p className="p-2">
                   <RiHome3Fill size={21} />
-                  tinggal di West Jakarta, Indonesia
+                  {user?.address}
                 </p>
               </div>
               <div className="mt-5">
@@ -66,14 +102,15 @@ const Profile = () => {
           </div>
           <div id="modal-detail" className={`modal ${modal}`}>
             <div className="modal-box max-w-5xl max-h-full md:w-11/12 lg:w-8/12">
-              <div
-              onClick={() => setModal("modal")}
-              >
-                <p className="flex justify-end" onClick={() => setModal("modal")}>
-              ✕
-            </p>
+              <div onClick={() => setModal("modal")}>
+                <p
+                  className="flex justify-end"
+                  onClick={() => setModal("modal")}
+                >
+                  ✕
+                </p>
               </div>
-                <DetailCard />
+              <DetailCard />
             </div>
           </div>
         </div>

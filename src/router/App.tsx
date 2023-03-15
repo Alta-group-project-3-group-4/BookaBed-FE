@@ -24,9 +24,9 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/rooms/:id_rooms" element={<Details />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:id_profile" element={<Profile />} />
         <Route
-          path="/profile/:id_profile"
+          path="/updateprofile/:id_profile"
           element={<UpProfile />}
         />
         <Route path="/addrooms" element={<UploadRumah />} />
