@@ -79,7 +79,7 @@ const Register = () => {
             <h1 className="font-bold text-2xl self-center pt-4 pb-4">
               Sign Up
             </h1>
-            <form className="pl-8">
+            <form onClick={handleSubmit} className="pl-8">
               <p>Nama Lengkap</p>
               <Input
                 id="input-nama"
@@ -109,7 +109,7 @@ const Register = () => {
                 <Button
                   id="btn-masuk"
                   label="Sign Up"
-                  className="bg-color3 text-white w-[20rem] h-10 rounded-lg disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer" onClick={handleSubmit}
+                  className="bg-color3 text-white w-[20rem] h-10 rounded-lg disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer"
                   loading={loading || disabled}
                 />
               </div>

@@ -22,18 +22,19 @@ const Profile = () => {
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
   const [modal, setModal] = useState<string>("");
-  const [user, setUser] = useState<ProfileType | null>(null);
+  const [user, setUser] = useState<ProfileType>();
   const [loading, setLoading] = useState<boolean>(false);
   const [cookie, setCookie] = useCookies(["token", "id"]);
   const checkToken = cookie.token;
+  
 
   useEffect(() => {
-    profile();
+    fetchData();
   }, []);
 
-  function profile() {
+  function fetchData() {
     axios
-      .get(`http://18.142.43.11:8080/users/5`, {
+      .get(`http://18.142.43.11:8080/users/53`, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },
@@ -47,6 +48,48 @@ const Profile = () => {
       });
   }
 
+  // const handleDelete = async (id: any) => {
+  //   MySwal.fire({
+  //     icon: "warning",
+  //     title: "Delete Account",
+  //     text: "Are u sure",
+  //     confirmButtonText: "Delete Account",
+  //     cancelButtonText: "Cancel",
+  //   }).then((confirm) => {
+  //     if (confirm.isConfirmed) {
+  //       setLoading(true);
+  //       navigate("/")
+  //       axios
+  //         .delete(`http://18.142.43.11:8080/users/5`, {
+  //           headers: {
+  //             Authorization: `Bearer ${checkToken}`,
+  //           },
+  //         })
+  //         .then((response) => {
+  //           const { message } = response.data;
+  //           const update = user.filter((item) => item.id !== id);
+  //           setUser(update);
+  //           MySwal.fire({
+  //             icon: "success",
+  //             title: message,
+  //             text: "Succesfull Delete Account",
+  //             showCancelButton: false,
+  //           });
+  //         })
+  //         .catch((error) => {
+  //           const { data } = error.response;
+  //           MySwal.fire({
+  //             icon: "error",
+  //             title: data.message,
+  //             text: "Gagal delete user",
+  //             showCancelButton: false,
+  //           });
+  //         })
+  //         .finally(() => setLoading(false));
+  //     }
+  //   })
+  // };
+
   const handleDetail = async () => {
     setModal("modal-open");
   };
@@ -54,7 +97,11 @@ const Profile = () => {
   return (
     <Layout>
       <Navbar2 />
-      <div className="container mx-auto p-10">
+      {loading ? (
+        <p>loading..</p>
+      ) : (
+        <>
+         <div className="container mx-auto p-10">
         <div className="flex flex-row p-6">
           <div className="card w-80 h-80 shadow-black shadow-sm mt-7 mx-auto">
             <div className="card-body mx-auto mt-8">
@@ -66,14 +113,21 @@ const Profile = () => {
                 />
               </div>
               <div className="card-title mt-4 mx-auto">
-                <p className="text-xl text-black">{user?.name}</p>
+                <p className="text-xl text-black">name {user?.name}</p>
               </div>
               <hr />
               <p className="mx-auto text-lg">{user?.email}</p>
               <hr />
               <div className="card card-actions flex flex-row justify-between space-x-3">
-                <p className="text-md font-semibold ">Edit Profile</p>
-                <p className="text-md font-semibold text-red-500">
+                <p
+                  className="text-md font-semibold"
+                  onClick={() => navigate("/updateprofile/:id_profile")}
+                >
+                  Edit Profile
+                </p>
+                <p 
+                // onClick={() => handleDelete(user?.id)}
+                className="text-md font-semibold text-red-500">
                   Delete Account
                 </p>
               </div>
@@ -115,6 +169,8 @@ const Profile = () => {
           </div>
         </div>
       </div>
+        </>
+      )}
       <Footer />
     </Layout>
   );

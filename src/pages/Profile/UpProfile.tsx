@@ -1,4 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { ProfileType } from "../../types/Profile";
+import axios from "axios";
+
+import Swal from "../../utils/Swal";
+import withReactContent from "sweetalert2-react-content";
 
 import Layout from "../../components/Layout";
 import Navbar2 from "../../components/Navbar2";
@@ -6,14 +14,110 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 
 const UpProfile = () => {
+  const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
+  const { user_id } = useParams();
+
+  const [cookie, setCookie] = useCookies(["token"]);
+  const checkToken = cookie.token;
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [disable, setDisable] = useState<boolean>(false);
+
+  const [submit, setSubmit] = useState<ProfileType>({});
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [about, setAbout] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+
+  useEffect(() => {
+    upProfile();
+  }, []);
+
+  useEffect(() => {
+    if (name && email && about  &&  address) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, [name, email, about, address]);
+
+  function upProfile() {
+    setLoading(true);
+    axios
+      .get(`http://18.142.43.11:8080/users/5`, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
+      .then((response) => {
+        const { name, email, about, address } = response.data;
+
+        setName(name);
+        setEmail(email);
+        setAbout(about);
+        setAddress(address);
+      })
+      .catch((error) => {
+        alert(error.response.toString());
+      })
+      .finally(() => setLoading(false));
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
+    e.preventDefault();
+    const formData = new FormData();
+    let key: keyof typeof submit;
+    for (key in submit) {
+      formData.append(key, submit[key]);
+    }
+
+    axios
+      .put(`http://18.142.43.11:8080/users/5`, formData, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
+      .then((response) => {
+        const { message } = response.data;
+        MySwal.fire({
+          icon: "success",
+          title: message,
+          text: "Succesfully update data profile",
+          showCancelButton: false,
+        });
+        navigate("/profile/:id_profile")
+        setSubmit({});
+      })
+      .catch((error) => {
+        const { data } = error.data;
+        MySwal.fire({
+          icon: "error",
+          title: data.message,
+          text: "Failed update data profile",
+          showCancelButton: false,
+        });
+      })
+      .finally(() => upProfile())
+      .finally(() => setLoading(false));
+  };
+
+  const handleChange = (value: string, key: keyof typeof submit) => {
+    let temp = { ...submit };
+    temp[key] = value;
+    setSubmit(temp);
+  };
+
   return (
     <Layout>
       <Navbar2 />
-      <div className="container mx-auto p-11">
+      <form
+        onSubmit={(e) => handleSubmit(e)}
+        className="container mx-auto p-11"
+      >
         <div className="flex-1 p-6">
-          <p className="text-5xl text-black font-semibold">
-            Update Profile
-          </p>
+          <p className="text-5xl text-black font-semibold">Update Profile</p>
         </div>
         <div className="flex justify-end">
           <div className="mt-5 h-full w-4/12 md:w-4/12 sm:w-4/12 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
@@ -47,9 +151,7 @@ const UpProfile = () => {
                 </label>
                 <p className="pl-1">or drag and drop</p>
               </div>
-              <p className="text-xs text-gray-500">
-                PNG, JPG, GIF up to 10MB
-              </p>
+              <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
             </div>
           </div>
         </div>
@@ -60,6 +162,8 @@ const UpProfile = () => {
               id="name"
               type="text"
               placeholder="example: Jhon Doe"
+              defaultValue={name}
+              onChange={(e) => handleChange(e.target.value, "name")}
             />
           </div>
           <div className="flex items-center m-5 p-6 gap-4 text-[16px] font-medium text-black space-x-10 -mt-5">
@@ -68,6 +172,8 @@ const UpProfile = () => {
               id="name"
               type="text"
               placeholder="example: jhondoe@gmail.com"
+              defaultValue={email}
+              onChange={(e) => handleChange(e.target.value, "email")}
             />
           </div>
           <div className="flex items-center m-5 p-6 gap-4  font-medium text-black space-x-2 -mt-5">
@@ -76,6 +182,8 @@ const UpProfile = () => {
               id="name"
               type="text"
               placeholder="example: indonesia, Jakarta Pusat"
+              defaultValue={address}
+              onChange={(e) => handleChange(e.target.value, "address")}
             />
           </div>
           <div className="flex items-center m-5 p-6 gap-4 text-[16px] font-medium text-black space-x-8 -mt-3">
@@ -83,6 +191,8 @@ const UpProfile = () => {
             <textarea
               className="textarea textarea-bordered w-6/12 md:w-5/12 sm:w-4/12 h-36 max-h-full rounded-lg bg-white text-black border-2 px-4 py-2 font-normal text-xl border-black"
               placeholder="example: saya seorang pengusaha"
+              defaultValue={about}
+              onChange={(e) => handleChange(e.target.value, "about")}
             ></textarea>
           </div>
           <div className="flex justify-center -mt-4">
@@ -93,7 +203,7 @@ const UpProfile = () => {
             />
           </div>
         </div>
-      </div>
+      </form>
     </Layout>
   );
 };
