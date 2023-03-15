@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Layout from "../../components/Layout";
 import Navbar2 from "../../components/Navbar2";
-import Card from "../../components/Card";
+import DetailCard from "./DetailCard";
 import Footer from "../../components/Footer";
 import { CardRumah } from "../../components/CardReservasi";
 import { RiHome3Fill } from "react-icons/ri";
-import images from "../../assets/images/fotona.png"
+import images from "../../assets/images/fotona.png";
 
 const Profile = () => {
+  const [modal, setModal] = useState<string>("");
+
+  const handleDetail = async () => {
+    setModal("modal-open");
+  };
+
   return (
     <Layout>
       <Navbar2 />
@@ -27,13 +33,13 @@ const Profile = () => {
                 <p className="text-xl">Jhon Doe</p>
               </div>
               <hr />
-              <p className="mx-auto text-lg">
-                jhondoe@gmail.com
-              </p>
+              <p className="mx-auto text-lg">jhondoe@gmail.com</p>
               <hr />
               <div className="card card-actions flex flex-row justify-between space-x-3">
                 <p className="text-md font-semibold ">Edit Profile</p>
-                <p className="text-md font-semibold text-red-500">Delete Account</p>
+                <p className="text-md font-semibold text-red-500">
+                  Delete Account
+                </p>
               </div>
             </div>
           </div>
@@ -52,8 +58,22 @@ const Profile = () => {
                 <p className="font-semibold text-2xl pb-4">
                   List Rumah yang Disewakan :
                 </p>
-                <CardRumah />
+                <div className="" onClick={() => handleDetail()}>
+                  <CardRumah />
+                </div>
               </div>
+            </div>
+          </div>
+          <div id="modal-detail" className={`modal ${modal}`}>
+            <div className="modal-box max-w-5xl max-h-full md:w-11/12 lg:w-8/12">
+              <div
+              onClick={() => setModal("modal")}
+              >
+                <p className="flex justify-end" onClick={() => setModal("modal")}>
+              ✕
+            </p>
+              </div>
+                <DetailCard />
             </div>
           </div>
         </div>
