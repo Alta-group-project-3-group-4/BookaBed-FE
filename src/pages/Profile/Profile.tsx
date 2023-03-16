@@ -17,7 +17,7 @@ import { ProfileType } from "../../types/Profile";
 import { RiHome3Fill } from "react-icons/ri";
 import images from "../../assets/images/fotona.png";
 
-const Profile = () => {
+const Profile = (id: any) => {
   const { id_user } = useParams();
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
@@ -34,13 +34,14 @@ const Profile = () => {
 
   function fetchData() {
     axios
-      .get(`http://18.142.43.11:8080/users/53`, {
+      .get(`http://18.142.43.11:8080/users/1`, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },
       })
       .then((response) => {
-        const data = response.data;
+        const data = response.data.data;
+        console.log("datas :", response.data.data)
         setUser(data);
       })
       .catch((error) => {
@@ -113,7 +114,7 @@ const Profile = () => {
                 />
               </div>
               <div className="card-title mt-4 mx-auto">
-                <p className="text-xl text-black">name {user?.name}</p>
+                <p className="text-xl text-black">{user?.name}</p>
               </div>
               <hr />
               <p className="mx-auto text-lg">{user?.email}</p>
