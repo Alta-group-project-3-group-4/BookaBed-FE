@@ -41,7 +41,6 @@ const Profile = (id: any) => {
       })
       .then((response) => {
         const data = response.data.data;
-        console.log("datas :", response.data.data)
         setUser(data);
       })
       .catch((error) => {
