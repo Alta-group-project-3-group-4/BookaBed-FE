@@ -7,7 +7,7 @@ import Swal from "../../utils/Swal";
 import withReactContent from "sweetalert2-react-content";
 
 import Layout from "../../components/Layout";
-import Navbar from "../../components/Navbar";
+import Navbar2 from "../../components/Navbar2";
 import Card from "../../components/Card";
 import Logo from "../../assets/LogoBookaBed.webp";
 import Button from "../../components/Button";
@@ -58,7 +58,7 @@ const Home: React.FC<HomeProps> = () => {
 
   return (
     <Layout>
-      <Navbar />
+      <Navbar2 />
       <div className="container mx-auto flex flex-col justify-center">
         <div className="my-10 text-black">
           <div className="m-2 grid grid-flow-row auto-rows-max grid-cols-2 lg:grid-cols-4 gap-3">
@@ -68,7 +68,7 @@ const Home: React.FC<HomeProps> = () => {
                 homestay_id={item.homestay_id}
                 name={item.name}
                 price={item.price}
-                images={item.images}
+                gambar={item.gambar}
               />
             ))}
           </div>

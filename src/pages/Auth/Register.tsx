@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 import Logo from "../../assets/LogoBookaBed.webp";
-import signup from "../../assets/SignUp.webp";
+import signup from "../../assets/SignUp.svg";
 
 import Input from "../../components/Input";
 import Button from "../../components/Button";
