@@ -31,8 +31,6 @@ const Home: React.FC<HomeProps> = () => {
   const MySwal = withReactContent(Swal);
   const [home, setHome] = useState<HomeProps[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [search, setSearch] = useState<string>("");
-  const [numDisplayed, setNumDisplayed] = useState<number>(8);
 
   const [cookie, setCookie] = useCookies(["token"]);
   const checkToken = cookie.token;
@@ -50,7 +48,6 @@ const Home: React.FC<HomeProps> = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data); // Check the response data
         setHome(res.data.data);
       })
       .catch((err) => {
