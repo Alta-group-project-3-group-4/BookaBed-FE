@@ -1,4 +1,7 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
 
 import Layout from "../../components/Layout";
 import Navbar2 from "../../components/Navbar2";
@@ -6,11 +9,85 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Footer from "../../components/Footer";
 
+import { RoomsType } from "../../types/Room";
+import { ProfileType } from "../../types/Profile";
+import Swal from "../../utils/Swal";
+import withReactContent from "sweetalert2-react-content";
+
 const UploadRumah = () => {
+
+  const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [disable, setDisable] = useState<boolean>(true);
+  const [name, setName] = useState<string>("");
+  const [price, setPrice] = useState<number>();
+  const [deskripsi, setDeskripsi] = useState<string>("");
+  const [clear, setClear] = useState<string>("");
+
+  const [cookie, setCookie] = useCookies(["token"]);
+  const checkToken = cookie.token;
+
+  useEffect(() => {
+    if(name && price && deskripsi) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, [name, price, deskripsi]);
+
+  const handleUpload = (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("price", price?.toString() || '');
+    formData.append("deskripsi", deskripsi);
+
+    const body = {
+      name,
+      price,
+      deskripsi,
+    };
+    axios.post(`http://18.142.43.11:8080/homestay`, formData, {
+      headers: {
+        Authorization: `Bearer ${checkToken}`,
+      },
+    })
+    .then((response) => {
+      const { message } = response.data;
+      setClear(message);
+      MySwal.fire({
+        icon: "success",
+        title: message,
+        text: "Success Upload Homestay",
+        showCancelButton: false,
+      });
+      Array.from(document.querySelectorAll("input")).forEach(
+        (input) => (input.value = "")
+      );
+    })
+    .catch((error) => {
+      const { data } = error.response;
+      MySwal.fire({
+        icon: "error",
+        title: data.message,
+        text: "Failed Upload Homestay",
+      });
+    })
+    .finally(() => setLoading(false));
+  }
+
+  const preventChar = (e: React.KeyboardEvent) =>
+  ["e", "E", "+", "-"].includes(e.key) && e.preventDefault();
+
+
   return (
     <Layout>
       <Navbar2 />
-      <div className="container mx-auto p-11">
+      <form onSubmit={(e) => handleUpload(e)}  className="container mx-auto p-11">
         <div className="flex-1 p-6">
           <p className="text-2xl text-black font-semibold">
             Upload Rumah
@@ -61,6 +138,8 @@ const UploadRumah = () => {
               id="name"
               type="text"
               placeholder="example: Jhon Doe"
+              defaultValue={name}
+              onChange={(e) => setName(e.target.value)}
               className="w-[25rem] h-12 border-2 border-black rounded-lg pl-3"
             />
           </div>
@@ -75,11 +154,13 @@ const UploadRumah = () => {
                 type="number"
                 placeholder="example: 10000"
                 className="w-[15rem] h-12 border-2 border-black rounded-lg pl-3"
+                onKeyDown={preventChar}
+                onChange={(e) => setPrice(parseInt(e.target.value))}
               />
               <p>/Night</p>
             </div>
           </div>
-          <div className="flex items-center m-4 py-6 gap-4  font-medium text-black space-x-4">
+          {/* <div className="flex items-center m-4 py-6 gap-4  font-medium text-black space-x-4">
             <p className="text-xl">Location:</p>
             <Input
               id="alamat"
@@ -87,12 +168,14 @@ const UploadRumah = () => {
               placeholder="example: indonesia, Jakarta Pusat"
               className="w-[25rem] h-12 border-2 border-black rounded-lg pl-3"
             />
-          </div>
+          </div> */}
           <div className="flex items-center ml-5 pl-1 gap-4 text-[16px] font-medium text-black space-x-8">
             <p className="text-xl">About:</p>
             <textarea
               className="textarea textarea-bordered w-6/12 h-32 max-h-full rounded-lg bg-white text-black border-2 px-4 py-2 font-normal text-xl border-black"
               placeholder="example: saya seorang pengusaha"
+              defaultValue={deskripsi}
+              onChange={(e) => setDeskripsi(e.target.value)}
             ></textarea>
           </div>
           <br />
@@ -101,10 +184,11 @@ const UploadRumah = () => {
               id="btn"
               label="Upload Rumah"
               className="bg-color3 w-[15rem] h-10 rounded-lg text-white font-bold"
+              // loading={loading || disable}
             />
           </div>
         </div>
-      </div>
+      </form>
       <Footer />
     </Layout>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import Layout from "../../components/Layout";
 import Navbar2 from "../../components/Navbar2";
@@ -12,9 +12,7 @@ const UpdateRumah = () => {
       <Navbar2 />
       <div className="container mx-auto p-11">
         <div className="flex-1 p-6">
-          <p className="text-2xl text-black font-semibold">
-            Edit Rumah
-          </p>
+          <p className="text-2xl text-black font-semibold">Edit Rumah</p>
         </div>
         <div className="flex justify-end">
           <div className="mt-5 h-full w-4/12 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
@@ -48,9 +46,7 @@ const UpdateRumah = () => {
                 </label>
                 <p className="pl-1">or drag and drop</p>
               </div>
-              <p className="text-xs text-gray-500">
-                PNG, JPG, GIF up to 10MB
-              </p>
+              <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
             </div>
           </div>
         </div>
