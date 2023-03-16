@@ -11,6 +11,7 @@ interface CardProps {
   price?: number
   gambar?: string
   images?: string
+  onClick?: any
 
 }
 const Card: FC<CardProps> = (
@@ -19,23 +20,23 @@ const Card: FC<CardProps> = (
     description,
     price,
     gambar,
-    images, }
-) => {
-  const navigate = useNavigate();
-
-  function onCLickDetail() {
-    navigate(`/rooms/:id_rooms}`);
+    images,
+    onClick
   }
+) => {
+
+
   return (
-    <div className="card card-compact w-96 bg-transparent p-4">
-      <figure onClick={() => onCLickDetail()}>
+    <div className="card card-compact w-96 bg-transparent p-4" onClick={onClick}>
+      <figure >
         <img
           src={images}
           alt="Nama Tempat"
           className="w-64 aspect-auto object-contain"
+          onClick={onClick}
         />
       </figure>
-      <div className="card-body items-start justify-between m-7 -mt-1" onClick={() => onCLickDetail()}>
+      <div className="card-body items-start justify-between m-7 -mt-1" >
         <h2 className="card-title">{name}</h2>
         <div className="rating space-x-2">
           <input

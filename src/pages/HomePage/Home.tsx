@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 
@@ -13,13 +13,13 @@ import { Link } from "react-router-dom";
 import { IoSearchCircleSharp } from "react-icons/io5";
 import { RiMenuFill, RiUser3Line } from "react-icons/ri";
 
-interface homeTypes {
-  homestay_id: number
-  name: string
-  description: string
-  price: number
-  gambar: string
-  images: string
+export interface homeTypes {
+  homestay_id: number;
+  name: string;
+  description: string;
+  price: number;
+  gambar: string;
+  images: string;
 }
 
 const Home = () => {
@@ -27,7 +27,7 @@ const Home = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
   const [numDisplayed, setNumDisplayed] = useState<number>(8);
-
+  const navigate = useNavigate()
   function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSearch(event.target.value);
   }
@@ -36,6 +36,10 @@ const Home = () => {
 
   function loadMore() {
     setNumDisplayed(numDisplayed + 8);
+  }
+
+  function onCLickDetail(homestay_id: number) {
+    navigate(`/room/${homestay_id}`);
   }
 
   useEffect(() => {
@@ -109,7 +113,7 @@ const Home = () => {
               </ul>
             </div>
             <div className="pt-2">
-              <Link to={"/profile"}>
+              <Link to={`/profile/:id_profile`}>
                 <RiUser3Line className="w-7 h-7 text-color3 " />
               </Link>
             </div>
@@ -126,6 +130,7 @@ const Home = () => {
                 description={item.description}
                 price={item.price}
                 gambar={item.gambar}
+                onClick={() => onCLickDetail(item.homestay_id)}
               />
             ))}
           </div>

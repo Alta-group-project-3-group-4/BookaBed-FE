@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useNavigate } from "react-router";
 import Logo from "../assets/LogoBookaBed.webp";
 
@@ -9,7 +9,14 @@ import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { handleAuth } from "../utils/redux/reducer/reducer";
 
-function Navbar2() {
+interface navbarProps {
+  onClick?: any
+}
+const Navbar2: FC<navbarProps> = (
+  {
+    onClick
+  }
+) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [cookie, , removeCookie] = useCookies(["token"]);
@@ -62,7 +69,7 @@ function Navbar2() {
               </li>
             </ul>
           </div>
-          <div className="pt-2" onClick={() => navigate("/profile/:id_profile")}>
+          <div className="pt-2" onClick={() => onClick}>
             <RiUser3Line className="w-7 h-7 text-color3 " />
           </div>
         </div>
