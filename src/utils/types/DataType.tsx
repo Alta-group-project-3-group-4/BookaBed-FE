@@ -1,9 +1,8 @@
-import React from 'react'
-
-function DataType() {
-    return (
-        <div>DataType</div>
-    )
+export interface homeTypes {
+    homestay_id: number;
+    name: string;
+    description: string;
+    price: number;
+    gambar: string;
+    images: string;
 }
-
-export default DataType

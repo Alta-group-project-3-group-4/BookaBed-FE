@@ -36,6 +36,7 @@ const Card: FC<CardProps> = ({
         className="card-body items-start justify-between m-7 -mt-1"
       >
         <p className="card-title">{name}</p>
+
         <div className="rating space-x-2">
           <input
             type="radio"
