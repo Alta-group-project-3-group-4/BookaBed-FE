@@ -74,7 +74,7 @@ const UpProfile = () => {
     }
 
     axios
-      .put(`http://18.142.43.11:8080/users/5`, formData, {
+      .put(`http://18.142.43.11:8080/users/1`, formData, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },
