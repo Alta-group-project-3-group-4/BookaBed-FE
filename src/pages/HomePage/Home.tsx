@@ -68,7 +68,7 @@ const Home: React.FC<HomeProps> = () => {
                 homestay_id={item.homestay_id}
                 name={item.name}
                 price={item.price}
-                gambar={item.gambar}
+                gambar={item.images}
               />
             ))}
           </div>

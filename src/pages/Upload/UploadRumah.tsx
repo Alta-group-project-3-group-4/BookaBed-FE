@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 import Layout from "../../components/Layout";
 import Navbar2 from "../../components/Navbar2";
@@ -15,7 +15,6 @@ import Swal from "../../utils/Swal";
 import withReactContent from "sweetalert2-react-content";
 
 const UploadRumah = () => {
-
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
 
@@ -24,18 +23,20 @@ const UploadRumah = () => {
   const [name, setName] = useState<string>("");
   const [price, setPrice] = useState<number>();
   const [deskripsi, setDeskripsi] = useState<string>("");
+  const [images, setImages] = useState<any>();
+  // const [file, setFile] = useState<File | undefined>(undefined);
   const [clear, setClear] = useState<string>("");
 
   const [cookie, setCookie] = useCookies(["token"]);
   const checkToken = cookie.token;
 
   useEffect(() => {
-    if(name && price && deskripsi) {
+    if (name && price && deskripsi && images) {
       setDisable(false);
     } else {
       setDisable(true);
     }
-  }, [name, price, deskripsi]);
+  }, [name, price, deskripsi, images]);
 
   const handleUpload = (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -43,55 +44,85 @@ const UploadRumah = () => {
 
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("price", price?.toString() || '');
+    formData.append("price", price?.toString() || "");
     formData.append("deskripsi", deskripsi);
+    for (let i = 0; i < images.length; i++) {
+      formData.append(`images`, images[i]);
+    }
 
     const body = {
       name,
       price,
       deskripsi,
     };
-    axios.post(`http://18.142.43.11:8080/homestay`, formData, {
-      headers: {
-        Authorization: `Bearer ${checkToken}`,
-      },
-    })
-    .then((response) => {
-      const { message } = response.data;
-      setClear(message);
-      MySwal.fire({
-        icon: "success",
-        title: message,
-        text: "Success Upload Homestay",
-        showCancelButton: false,
-      });
-      Array.from(document.querySelectorAll("input")).forEach(
-        (input) => (input.value = "")
-      );
-    })
-    .catch((error) => {
-      const { data } = error.response;
-      MySwal.fire({
-        icon: "error",
-        title: data.message,
-        text: "Failed Upload Homestay",
-      });
-    })
-    .finally(() => setLoading(false));
-  }
+    axios
+      .post(`http://18.142.43.11:8080/homestay`, formData, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
+      .then((response) => {
+        const { message } = response.data;
+        setClear(message);
+        MySwal.fire({
+          icon: "success",
+          title: message,
+          text: "Success Upload Homestay",
+          showCancelButton: false,
+        });
+        Array.from(document.querySelectorAll("input")).forEach(
+          (input) => (input.value = "")
+        );
+      })
+      .catch((error) => {
+        const { data } = error.response;
+        MySwal.fire({
+          icon: "error",
+          title: data.message,
+          text: "Failed Upload Homestay",
+        });
+      })
+      .finally(() => setLoading(false));
+  };
+
+  // const handleUploadFile = async (file: any) => {
+  //   const formData = new FormData();
+  //   formData.append('file', file);
+
+  //   const config: AxiosRequestConfig = {
+  //     headers: {
+  //       'Content-Type' : 'multipart/form-data'
+  //     }
+  //   };
+
+  //   try {
+  //     const response = await axios.post(`https://app.swaggerhub.com/apis-docs/AirBnBProject/AirBnB/1.0.0#/images`, formData, config);
+  //     setFile(response.data);
+  //     console.log("datas", response.data);
+  //   }
+  //   catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+
+  // const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.files) {
+  //     setFile(event.target.files[0]);
+  //   }
+  // };
 
   const preventChar = (e: React.KeyboardEvent) =>
-  ["e", "E", "+", "-"].includes(e.key) && e.preventDefault();
-
+    ["e", "E", "+", "-"].includes(e.key) && e.preventDefault();
 
   return (
     <Layout>
       <Navbar2 />
-      <form onSubmit={(e) => handleUpload(e)}  className="container mx-auto p-11">
+      <form
+        onSubmit={(e) => handleUpload(e)}
+        className="container mx-auto p-11"
+      >
         <div className="flex-1 p-6">
-          <p className="text-2xl text-black font-semibold">
-            Upload Rumah
-          </p>
+          <p className="text-2xl text-black font-semibold">Upload Rumah</p>
         </div>
         <div className="flex justify-end">
           <div className="mt-5 h-full w-4/12 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
@@ -110,7 +141,7 @@ const UploadRumah = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-              <div className="flex text-sm text-gray-600">
+              <form className="flex text-sm text-gray-600">
                 <label
                   htmlFor="file-upload"
                   className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
@@ -121,13 +152,18 @@ const UploadRumah = () => {
                     name="file-upload"
                     type="file"
                     className="sr-only"
+                    onChange={(e) => {
+                      if (!e.currentTarget.files) return;
+                      setImages(e.target.files);
+                    }}
+                    accept="image/jpg, image/jpeg, image/png"
+                    multiple
+                    min={1}
                   />
                 </label>
                 <p className="pl-1">or drag and drop</p>
-              </div>
-              <p className="text-xs text-gray-500">
-                PNG, JPG, GIF up to 10MB
-              </p>
+              </form>
+              <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
             </div>
           </div>
         </div>
