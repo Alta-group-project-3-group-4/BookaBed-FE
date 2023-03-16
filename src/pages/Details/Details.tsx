@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
+import axios from "axios";
+import { useParams } from "react-router";
 
 import Layout from "../../components/Layout";
 import Navbar2 from "../../components/Navbar2";
@@ -9,18 +12,69 @@ import Swal from "../../utils/Swal";
 import withReactContent from "sweetalert2-react-content";
 
 import images from "../../assets/images/fotona.png";
+import { useCookies } from "react-cookie";
 
+export interface roomTypes {
+  homestay_id: number
+  name: string;
+  description: string;
+  price: number;
+  gambar: string;
 
-
+}
 const Details = () => {
+  const { homestay_id } = useParams();
   const MySwal = withReactContent(Swal);
- 
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [detail, setDetail] = useState<roomTypes>({
+    homestay_id: 0,
+    name: "",
+    description: "",
+    price: 0,
+    gambar: '',
+  });
+
+  const [cookie, setCookie] = useCookies(["token", "id"]);
+  const token = cookie.token;
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  function fetchData() {
+    setLoading(true);
+    axios
+      .get(
+        `https://virtserver.swaggerhub.com/AirBnBProject/AirBnB/1.0.0/homestay/${homestay_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        const result = response.data.data[0];
+        setDetail(result);
+        console.log(result);
+      })
+      .catch((error) => {
+        MySwal.fire({
+          icon: "error",
+          title: "Failed to fetch data!",
+          text: "Please try again later.",
+        });
+      });
+  }
+
   return (
     <Layout>
       <Navbar2 />
       <div className="container mx-auto p-10 w-full">
         <div className="flex-1 p-6">
-          <p className="font-semibold text-3xl text-black">Nama Tempat</p>
+          <p className="font-semibold text-3xl text-black">
+            {detail.name}
+          </p>
           <div className="flex flex-row space-x-1 divide-x-[2px] divide-black">
             <p className="text-sm text-black font-semibold">Lokasi Tempat</p>
             <div>
@@ -44,7 +98,9 @@ const Details = () => {
               </p>
               <div className="card w-96 h-full bg-white shadow-xl">
                 <div className="card-body m-2">
-                  <h2 className="card-title text-black">2.999.999 malam</h2>
+                  <h2 className="card-title text-black">
+                    {detail.price} /malam
+                  </h2>
                   <div className="flex flex-row mt-3 space-x-1">
                     <Input
                       id="date"
@@ -81,7 +137,7 @@ const Details = () => {
           <div className="flex flex-col items-center justify-center w-full h-full p-7 -mt-96">
             <div className="flex flex-row w-full gap-3 items-center">
               <img
-                src={images}
+                src={detail.gambar}
                 alt="foto1"
                 className="w-[30%] h-full object-"
               />
@@ -104,14 +160,7 @@ const Details = () => {
             <div className="w-[60%] flex flex-col">
               <h1 className="font-bold text-2xl pb-3">About</h1>
               <p>
-                {" "}
-                Vila - vila indah di PANTAI KOKO terdiri dari sekelompok empat
-                bangunan langsung di pantai hitam yang berkilauan di Lovina,
-                Bali Utara. Mereka menawarkan tempat peristirahatan dari
-                kehidupan sehari - hari dan terkesan dengan arsitektur modern
-                dan perabotan bergaya. Biarkan diri Anda dimanjakan oleh tim
-                kami yang penuh perhatian yang akan dengan senang hati mengurus
-                setiap kebutuhan.
+                {detail.description}
               </p>
             </div>
             <div className="w-[30%]">
