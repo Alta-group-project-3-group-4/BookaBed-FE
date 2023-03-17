@@ -10,6 +10,7 @@ interface CardProps {
   price?: number;
   gambar?: string;
   images?: string;
+  onClick: any
 }
 
 const Card: FC<CardProps> = ({
@@ -19,12 +20,13 @@ const Card: FC<CardProps> = ({
   price,
   gambar,
   images,
+  onClick
 }) => {
   const navigate = useNavigate();
   const [cookie, setCookie] = useCookies(["token"]);
 
   return (
-    <div id={homestay_id} className="card card-compact w-96 bg-transparent p-4">
+    <div id={homestay_id} className="card card-compact w-96 bg-transparent p-4" onClick={onClick}>
       <figure>
         <img
           src={images}

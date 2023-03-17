@@ -29,6 +29,7 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = () => {
   const MySwal = withReactContent(Swal);
+  const navigate = useNavigate()
   const [home, setHome] = useState<HomeProps[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -55,7 +56,9 @@ const Home: React.FC<HomeProps> = () => {
       })
       .finally(() => setLoading(false));
   }
-
+  function onCLickDetail(homestay_id: number) {
+    navigate(`/room/${homestay_id}`);
+  }
   return (
     <Layout>
       <Navbar2 />
@@ -69,6 +72,7 @@ const Home: React.FC<HomeProps> = () => {
                 name={item.name}
                 price={item.price}
                 gambar={item.images}
+                onClick={() => onCLickDetail(item.homestay_id)}
               />
             ))}
           </div>
