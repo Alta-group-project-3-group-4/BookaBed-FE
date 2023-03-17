@@ -86,7 +86,7 @@ const Card: FC<CardProps> = ({
             tabIndex={0}
             className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
           >
-            {cardType === "compact" ? (
+            {cardType === "rumah" ? (
               <>
                 <li>
                   <a>Edit</a>
