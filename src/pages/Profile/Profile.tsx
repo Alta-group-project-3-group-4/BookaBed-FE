@@ -34,7 +34,7 @@ const Profile = () => {
 
   function fetchData() {
     axios
-      .get(`http://18.142.43.11:8080/users/${id}`, {
+      .get(`http://18.142.43.11:8080/users/1`, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },

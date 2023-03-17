@@ -45,7 +45,7 @@ const UpProfile = () => {
   function upProfile() {
     setLoading(true);
     axios
-      .get(`http://18.142.43.11:8080/users/5`, {
+      .get(`http://18.142.43.11:8080/users/1`, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },
@@ -64,7 +64,7 @@ const UpProfile = () => {
       .finally(() => setLoading(false));
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData();
@@ -74,7 +74,7 @@ const UpProfile = () => {
     }
 
     axios
-      .put(`http://18.142.43.11:8080/users/1`, formData, {
+      .put(`http://18.142.43.11:8080/users/5`, formData, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },
@@ -108,6 +108,7 @@ const UpProfile = () => {
     temp[key] = value;
     setSubmit(temp);
   };
+
 
   return (
     <Layout>
