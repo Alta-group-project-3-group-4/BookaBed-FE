@@ -1,7 +1,9 @@
 import React from "react";
 import { FC } from "react";
-import { useNavigate } from "react-router";
-import { useCookies } from "react-cookie";
+import { FiMoreHorizontal } from "react-icons/fi";
+import foto from "../assets/images/fotoni.png";
+import imagess from "../../assets/images/fotona.png";
+
 
 interface CardProps {
   homestay_id?: string;
@@ -10,7 +12,8 @@ interface CardProps {
   price?: number;
   gambar?: string;
   images?: string;
-  onClick: any
+  onClick?: () => void;
+  cardType?: "compact" | "reservasi" | "rumah";
 }
 
 const Card: FC<CardProps> = ({
@@ -20,25 +23,14 @@ const Card: FC<CardProps> = ({
   price,
   gambar,
   images,
-  onClick
+  onClick,
+  cardType = "compact",
 }) => {
-  const navigate = useNavigate();
-  const [cookie, setCookie] = useCookies(["token"]);
+  let cardBody;
 
-  return (
-    <div id={homestay_id} className="card card-compact w-96 bg-transparent p-4" onClick={onClick}>
-      <figure>
-        <img
-          src={images}
-          alt={name}
-          className="w-64 aspect-auto object-contain"
-        />
-      </figure>
-      <div
-        className="card-body items-start justify-between m-7 -mt-1"
-      >
-        <p className="card-title">{name}</p>
-
+  if (cardType === "compact") {
+    cardBody = (
+      <>
         <div className="rating space-x-2">
           <input
             type="radio"
@@ -51,6 +43,69 @@ const Card: FC<CardProps> = ({
           <p className="text-start text-xl font-semibold">
             Rp.{price}/malam
           </p>
+        </div>
+      </>
+    );
+  } else if (cardType === "reservasi") {
+    cardBody = (
+      <>
+        <p className="text-slate-400 pt-2">
+          Check in 21/9/2023 - Check out 22/9/2023
+        </p>
+      </>
+    );
+  } else if (cardType === "rumah") {
+    cardBody = (
+      <>
+        <p className="text-color1 pt-2">harga /Night</p>
+      </>
+    );
+  }
+
+  return (
+    <div
+      id={homestay_id}
+      className={`card card-${cardType} w-96 bg-transparent p-4`}
+      onClick={onClick}
+    >
+      <figure>
+        <img
+          src={images}
+          alt={name}
+          className="w-64 aspect-auto object-contain"
+        />
+      </figure>
+      <div className="card-body items-start justify-between m-7 -mt-1">
+        <h1 className="card-title">{name}</h1>
+        {cardBody}
+        <div className="dropdown dropdown-hover">
+          <label tabIndex={0} className="btn btn-ghost btn-circle">
+            <FiMoreHorizontal className="h-5 w-5" />
+          </label>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            {cardType === "compact" ? (
+              <>
+                <li>
+                  <a>Edit</a>
+                </li>
+                <li>
+                  <a className="text-red-600">Delete</a>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <a className="text-red-600">Batalkan Booking</a>
+                </li>
+                <li>
+                  <a>Beri Ulasan</a>
+                </li>
+              </>
+            )}
+          </ul>
         </div>
       </div>
     </div>
