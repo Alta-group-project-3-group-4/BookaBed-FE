@@ -35,7 +35,7 @@ const Register = () => {
       email,
       password,
     };
-
+  
     axios
       .post(
         "http://18.142.43.11:8080/auth/register",
@@ -48,7 +48,6 @@ const Register = () => {
           text: message,
           showCancelButton: false,
         });
-
         navigate("/login");
       })
       .catch((err) => {
@@ -61,6 +60,7 @@ const Register = () => {
       })
       .finally(() => setLoading(false));
   };
+  
   return (
     <div className=" w-full h-screen bg-white  justify-around">
       <div className="text-color3 font-bold flex flex-row justify-center pt-12 gap-12">
@@ -79,7 +79,7 @@ const Register = () => {
             <h1 className="font-bold text-2xl self-center pt-4 pb-4">
               Sign Up
             </h1>
-            <form onClick={handleSubmit} className="pl-8">
+            <form onSubmit={handleSubmit} className="pl-8">
               <p>Nama Lengkap</p>
               <Input
                 id="input-nama"
@@ -109,6 +109,7 @@ const Register = () => {
                 <Button
                   id="btn-masuk"
                   label="Sign Up"
+                  type="submit"
                   className="bg-color3 text-white w-[20rem] h-10 rounded-lg disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer"
                   loading={loading || disabled}
                 />

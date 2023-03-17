@@ -17,8 +17,8 @@ import { ProfileType } from "../../types/Profile";
 import { RiHome3Fill } from "react-icons/ri";
 import images from "../../assets/images/fotona.png";
 
-const Profile = (id: any) => {
-  const { id_user } = useParams();
+const Profile = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
   const [modal, setModal] = useState<string>("");
@@ -34,7 +34,7 @@ const Profile = (id: any) => {
 
   function fetchData() {
     axios
-      .get(`http://18.142.43.11:8080/users/1`, {
+      .get(`http://18.142.43.11:8080/users/${id}`, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },

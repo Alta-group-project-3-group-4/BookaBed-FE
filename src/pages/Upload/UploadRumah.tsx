@@ -141,7 +141,7 @@ const UploadRumah = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-              <form className="flex text-sm text-gray-600">
+              <div className="flex text-sm text-gray-600">
                 <label
                   htmlFor="file-upload"
                   className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
@@ -162,7 +162,7 @@ const UploadRumah = () => {
                   />
                 </label>
                 <p className="pl-1">or drag and drop</p>
-              </form>
+              </div>
               <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
             </div>
           </div>
