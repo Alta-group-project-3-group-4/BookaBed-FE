@@ -1,9 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Router,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
@@ -25,14 +20,11 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/room/:homestay_id" element={<Details />} />
         <Route path="/profile/:id_profile" element={<Profile />} />
-        <Route path="/updateprofile/:id_profile" element={<UpProfile />}
-        />
+        <Route path="/updateprofile/:id_profile" element={<UpProfile />} />
         <Route path="/addrooms" element={<UploadRumah />} />
-        <Route path="/updaterooms/:id_rooms" element={<UpdateRumah />}
-        />
+        <Route path="/updaterooms/:id_rooms" element={<UpdateRumah />} />
         <Route path="/review" element={<Ulasan />} />
-        <Route  path="/reservasi" element={<HistoryReservasi />}
-        />
+        <Route path="/reservasi" element={<HistoryReservasi />} />
       </Routes>
     </BrowserRouter>
   );

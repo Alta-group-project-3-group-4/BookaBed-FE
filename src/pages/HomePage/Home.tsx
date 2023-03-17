@@ -13,23 +13,24 @@ import Logo from "../../assets/LogoBookaBed.webp";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 
+import { RoomsType } from "../../types/Room";
+import { homeTypes } from "../../utils/types/DataType";
 import { Link } from "react-router-dom";
 import { IoSearchCircleSharp } from "react-icons/io5";
 import { RiMenuFill, RiUser3Line } from "react-icons/ri";
 
 interface HomeProps {
-  homestay_id: number
-  name: string
-  description: string
-  price: number
-  gambar: string
-  images: string
+  homestay_id: number;
+  name: string;
+  description: string;
+  price: number;
+  images: string;
 }
 
-const Home: React.FC<HomeProps> = () => {
+const Home = () => {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate()
-  const [home, setHome] = useState<HomeProps[]>([]);
+  const [home, setHome] = useState<homeTypes[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
   const [numDisplayed, setNumDisplayed] = useState<number>(8);

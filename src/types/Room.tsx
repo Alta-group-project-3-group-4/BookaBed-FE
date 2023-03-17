@@ -3,4 +3,5 @@ export interface RoomsType {
     name?: string;
     price?: number;
     deskripsi?: string;
+    image?: string;
 }
