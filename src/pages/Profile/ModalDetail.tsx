@@ -1,11 +1,11 @@
 import React from "react";
 
-import { CardReservasi } from "../../components/CardReservasi";
+import Card from "../../components/Card";
 import Button from "../../components/Button";
 
 import images from "../../assets/images/fotoni.png";
 
-const DetailCard = () => {
+const ModalDetail = () => {
   return (
     <div className="container mx-auto">
       <div className="flex flex-row">
@@ -71,4 +71,4 @@ const DetailCard = () => {
   );
 };
 
-export default DetailCard;
+export default ModalDetail;

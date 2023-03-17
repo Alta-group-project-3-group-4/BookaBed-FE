@@ -1,5 +1,5 @@
 import React from "react";
-import { CardReservasi } from "../../components/CardReservasi";
+import Card from "../../components/Card";
 import Footer from "../../components/Footer";
 import Layout from "../../components/Layout";
 import Navbar2 from "../../components/Navbar2";
@@ -12,9 +12,12 @@ const HistoryReservasi = () => {
         <h1 className="font-bold text-2xl pb-8">
           Riwayat Reservasi anda
         </h1>
-        <CardReservasi />
+        <Card 
+        cardType="reservasi" 
+        
+        />
         <br />
-        <CardReservasi />
+        <Card cardType="reservasi" />
       </div>
       <Footer />
     </Layout>

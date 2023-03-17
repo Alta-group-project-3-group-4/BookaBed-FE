@@ -29,7 +29,7 @@ interface HomeProps {
 
 const Home = () => {
   const MySwal = withReactContent(Swal);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [home, setHome] = useState<homeTypes[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
@@ -41,8 +41,9 @@ const Home = () => {
   function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSearch(event.target.value);
   }
-  const filteredHome = home.filter((item) =>
-    item.name.toLowerCase().includes(search.toLowerCase())).slice(0, numDisplayed);
+  const filteredHome = home
+    .filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))
+    .slice(0, numDisplayed);
 
   function loadMore() {
     setNumDisplayed(numDisplayed + 8);
@@ -55,7 +56,9 @@ const Home = () => {
   function fetchHome() {
     setLoading(true);
     axios
-    .get(`https://virtserver.swaggerhub.com/AirBnBProject/AirBnB/1.0.0/homestay`)
+      .get(
+        `https://virtserver.swaggerhub.com/AirBnBProject/AirBnB/1.0.0/homestay`
+      )
       .then((res) => {
         setHome(res.data.data);
       })
@@ -75,6 +78,7 @@ const Home = () => {
           <div className="m-2 grid grid-flow-row auto-rows-max grid-cols-2 lg:grid-cols-4 gap-3">
             {filteredHome.map((item: any, index) => (
               <Card
+                cardType="compact"
                 key={index}
                 homestay_id={item.homestay_id}
                 name={item.name}
