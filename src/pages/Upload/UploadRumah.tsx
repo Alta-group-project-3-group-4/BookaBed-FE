@@ -37,6 +37,7 @@ const UploadRumah = () => {
       setDisable(true);
     }
   }, [name, price, deskripsi, images]);
+  
 
   const handleUpload = (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);

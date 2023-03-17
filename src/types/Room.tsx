@@ -1,5 +1,5 @@
 export interface RoomsType {
-    homestay_id?: number;
+    homestay_id?: any;
     name?: string;
     price?: number;
     deskripsi?: string;

@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
 
 import Layout from "../../components/Layout";
 import Navbar2 from "../../components/Navbar2";
@@ -6,11 +9,117 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Footer from "../../components/Footer";
 
+import { RoomsType } from "../../types/Room";
+import Swal from "../../utils/Swal";
+import withReactContent from "sweetalert2-react-content";
+
 const UpdateRumah = () => {
+  const { id_rooms } = useParams();
+  const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [disable, setDisable] = useState<boolean>(true);
+  const [name, setName] = useState<string>("");
+  const [price, setPrice] = useState<number>();
+  const [deskripsi, setDeskripsi] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
+  const [images, setImages] = useState<any>();
+  const [submit, setSubmit] = useState<RoomsType>({});
+
+  const [clear, setClear] = useState<string>("");
+  const [cookie, setCookie] = useCookies(["token"]);
+  const checkToken = cookie.token;
+
+  useEffect(() => {
+    if (name && price && deskripsi && images && location) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, [name, price, deskripsi, images, location]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  function fetchData() {
+    setLoading(true);
+    axios
+      .get(`http://18.142.43.11:8080/homestay`, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
+      .then((response) => {
+        const { name, price, deskripsi, images, location } = response.data;
+        setName(name);
+        setPrice(price);
+        setDeskripsi(deskripsi);
+        setImages(images);
+        setLocation(location);
+      })
+      .catch((error) => {
+        alert(error.response.toString());
+      })
+      .finally(() => setLoading(false));
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
+    setLoading(true);
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("price", price?.toString() || "");
+    formData.append("deskripsi", deskripsi);
+    formData.append("location", location);
+    for (let i = 0; i < images.length; i++) {
+      formData.append(`images`, images[i]);
+    }
+
+    axios
+      .put(`http://18.142.43.11:8080/homestay/${id_rooms}`, formData, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
+      .then((response) => {
+        const { message } = response.data;
+        MySwal.fire({
+          icon: "success",
+          title: message,
+          text: "Successfully update data Homestay",
+          showCancelButton: false,
+        });
+        navigate("/");
+        setSubmit({});
+      })
+      .catch((error) => {
+        const { data } = error.data;
+        MySwal.fire({
+          icon: "error",
+          title: data.message,
+          text: "Failed update data Homestay",
+          showCancelButton: false,
+        });
+      })
+      .finally(() => fetchData())
+      .finally(() => setLoading(false));
+  };
+
+  const handleChange = (value: string, key: keyof typeof submit) => {
+    let temp = { ...submit };
+    temp[key] = value;
+    setSubmit(temp);
+  };
+
+  const preventChar = (e: React.KeyboardEvent) =>
+    ["e", "E", "+", "-"].includes(e.key) && e.preventDefault();
+
   return (
     <Layout>
       <Navbar2 />
-      <div className="container mx-auto p-11">
+      <form onSubmit={(e) => handleSubmit(e)}  className="container mx-auto p-11">
         <div className="flex-1 p-6">
           <p className="text-2xl text-black font-semibold">Edit Rumah</p>
         </div>
@@ -42,6 +151,13 @@ const UpdateRumah = () => {
                     name="file-upload"
                     type="file"
                     className="sr-only"
+                    onChange={(e) => {
+                      if (!e.currentTarget.files) return;
+                      setImages(e.target.files);
+                    }}
+                    accept="image/jpg, image/jpeg, image/png"
+                    multiple
+                    min={1}
                   />
                 </label>
                 <p className="pl-1">or drag and drop</p>
@@ -56,6 +172,8 @@ const UpdateRumah = () => {
             <Input
               id="name"
               type="text"
+              defaultValue={name}
+              onChange={(e) => handleChange(e.target.value, "name")}
               placeholder="example: Jhon Doe"
               className="w-[25rem] h-12 border-2 border-black rounded-lg pl-3"
             />
@@ -71,6 +189,8 @@ const UpdateRumah = () => {
                 type="number"
                 placeholder="example: 10000"
                 className="w-[15rem] h-12 border-2 border-black rounded-lg pl-3"
+                onKeyDown={preventChar}
+                onChange={(e) => setPrice(parseInt(e.target.value))}
               />
               <p>/Night</p>
             </div>
@@ -89,6 +209,8 @@ const UpdateRumah = () => {
             <textarea
               className="textarea textarea-bordered w-6/12 h-32 max-h-full rounded-lg bg-white text-black border-2 px-4 py-2 font-normal text-xl border-black"
               placeholder="example: saya seorang pengusaha"
+              defaultValue={deskripsi}
+              onChange={(e) => handleChange(e.target.value, "deskripsi")}
             ></textarea>
           </div>
           <br />
@@ -100,7 +222,7 @@ const UpdateRumah = () => {
             />
           </div>
         </div>
-      </div>
+      </form>
       <Footer />
     </Layout>
   );
