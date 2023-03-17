@@ -69,7 +69,7 @@ const Navbar2: FC<navbarProps> = (
               </li>
             </ul>
           </div>
-          <div className="pt-2" onClick={() => onClick}>
+          <div className="pt-2" onClick={() => navigate("/profile/:id_profile")}>
             <RiUser3Line className="w-7 h-7 text-color3 " />
           </div>
         </div>

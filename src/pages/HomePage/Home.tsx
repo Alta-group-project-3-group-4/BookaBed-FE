@@ -18,13 +18,12 @@ import { IoSearchCircleSharp } from "react-icons/io5";
 import { RiMenuFill, RiUser3Line } from "react-icons/ri";
 
 interface HomeProps {
-  [x: string]: any;
-  id?: number;
-  name?: string;
-  description?: string;
-  price?: number;
-  gambar?: string;
-  images?: string;
+  homestay_id: number
+  name: string
+  description: string
+  price: number
+  gambar: string
+  images: string
 }
 
 const Home: React.FC<HomeProps> = () => {
@@ -32,9 +31,21 @@ const Home: React.FC<HomeProps> = () => {
   const navigate = useNavigate()
   const [home, setHome] = useState<HomeProps[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>("");
+  const [numDisplayed, setNumDisplayed] = useState<number>(8);
 
   const [cookie, setCookie] = useCookies(["token"]);
   const checkToken = cookie.token;
+
+  function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setSearch(event.target.value);
+  }
+  const filteredHome = home.filter((item) =>
+    item.name.toLowerCase().includes(search.toLowerCase())).slice(0, numDisplayed);
+
+  function loadMore() {
+    setNumDisplayed(numDisplayed + 8);
+  }
 
   useEffect(() => {
     fetchHome();
@@ -43,11 +54,7 @@ const Home: React.FC<HomeProps> = () => {
   function fetchHome() {
     setLoading(true);
     axios
-      .get(`http://18.142.43.11:8080/homestay`, {
-        headers: {
-          Authorization: `Bearer ${checkToken}`,
-        },
-      })
+    .get(`https://virtserver.swaggerhub.com/AirBnBProject/AirBnB/1.0.0/homestay`)
       .then((res) => {
         setHome(res.data.data);
       })
@@ -65,7 +72,7 @@ const Home: React.FC<HomeProps> = () => {
       <div className="container mx-auto flex flex-col justify-center">
         <div className="my-10 text-black">
           <div className="m-2 grid grid-flow-row auto-rows-max grid-cols-2 lg:grid-cols-4 gap-3">
-            {home.map((item: any, index) => (
+            {filteredHome.map((item: any, index) => (
               <Card
                 key={index}
                 homestay_id={item.homestay_id}
