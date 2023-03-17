@@ -119,7 +119,10 @@ const UpdateRumah = () => {
   return (
     <Layout>
       <Navbar2 />
-      <form onSubmit={(e) => handleSubmit(e)}  className="container mx-auto p-11">
+      <form
+        onSubmit={(e) => handleSubmit(e)}
+        className="container mx-auto p-11"
+      >
         <div className="flex-1 p-6">
           <p className="text-2xl text-black font-semibold">Edit Rumah</p>
         </div>
