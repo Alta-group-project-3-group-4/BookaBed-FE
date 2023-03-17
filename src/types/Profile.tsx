@@ -1,5 +1,5 @@
 export interface ProfileType {
-    id?: number;
+    id?: any;
     name?: string;
     email?: string;
     about?: string;
